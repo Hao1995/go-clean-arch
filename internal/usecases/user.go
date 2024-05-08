@@ -17,7 +17,7 @@ type UserUseCase interface {
 type userUseCase struct {
 	unitOfWork     UnitOfWork
 	userRepository UserRepository
-	emailService   EmailService
+	rankRepository RankRepository
 }
 
 func (s *userUseCase) Register(ctx context.Context) error {
@@ -26,8 +26,8 @@ func (s *userUseCase) Register(ctx context.Context) error {
 		if err := s.userRepository.Create(ctx); err != nil {
 			return errors.Wrap(err, "failed to create user")
 		}
-		if err := s.emailService.Send(ctx); err != nil {
-			return errors.Wrap(err, "failed to send email")
+		if err := s.rankRepository.Init(ctx); err != nil {
+			return errors.Wrap(err, "failed to init rank")
 		}
 		return nil
 	})
