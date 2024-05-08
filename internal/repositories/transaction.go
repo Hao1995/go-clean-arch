@@ -12,7 +12,7 @@ type unitOfWork struct {
 	db *gorm.DB
 }
 
-func NewStore(db *gorm.DB) usecases.UnitOfWork {
+func NewUnitOfWork(db *gorm.DB) usecases.UnitOfWork {
 	return &unitOfWork{
 		db: db,
 	}
@@ -33,9 +33,9 @@ func (s *unitOfWork) BeginTx(ctx context.Context, fn func(tx usecases.UnitOfWork
 		}
 	}()
 
-	newStore := &unitOfWork{
+	newUnitOfWork := &unitOfWork{
 		db: tx,
 	}
-	err = fn(newStore)
+	err = fn(newUnitOfWork)
 	return nil
 }
