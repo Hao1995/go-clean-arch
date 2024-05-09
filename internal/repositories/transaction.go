@@ -39,3 +39,15 @@ func (s *unitOfWork) BeginTx(ctx context.Context, fn func(tx usecases.UnitOfWork
 	err = fn(newUnitOfWork)
 	return nil
 }
+
+func (s *unitOfWork) NewUserRepository() usecases.UserRepository {
+	return &userRepository{
+		db: s.db,
+	}
+}
+
+func (s *unitOfWork) NewRankRepository() usecases.RankRepository {
+	return &rankRepository{
+		db: s.db,
+	}
+}

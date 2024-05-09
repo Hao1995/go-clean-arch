@@ -11,4 +11,6 @@ https://blog.devgenius.io/go-golang-clean-architecture-repositories-vs-transacti
 
 type UnitOfWork interface {
 	BeginTx(ctx context.Context, fn func(tx UnitOfWork) error) error
+	NewUserRepository() UserRepository
+	NewRankRepository() RankRepository
 }

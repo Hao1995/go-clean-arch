@@ -16,10 +16,10 @@ type User struct {
 }
 
 type userRepository struct {
-	db gorm.DB
+	db *gorm.DB
 }
 
-func NewUserRepository(db gorm.DB) usecases.UserRepository {
+func NewUserRepository(db *gorm.DB) usecases.UserRepository {
 	return &userRepository{
 		db: db,
 	}

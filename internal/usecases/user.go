@@ -23,10 +23,13 @@ type userUseCase struct {
 func (s *userUseCase) Register(ctx context.Context) error {
 	// Simulate operations across multiple repositories and services.
 	return s.unitOfWork.BeginTx(ctx, func(tx UnitOfWork) error {
-		if err := s.userRepository.Create(ctx); err != nil {
+		userRepository := tx.NewUserRepository()
+		if err := userRepository.Create(ctx); err != nil {
 			return errors.Wrap(err, "failed to create user")
 		}
-		if err := s.rankRepository.Init(ctx); err != nil {
+
+		rankRepository := tx.NewRankRepository()
+		if err := rankRepository.Init(ctx); err != nil {
 			return errors.Wrap(err, "failed to init rank")
 		}
 		return nil
